@@ -282,6 +282,26 @@ header {
 }
 
 /* Tasks Section */
+.tasks-section {
+    position: relative;
+}
+
+.task-page-number {
+    position: absolute;
+    bottom: 25px;
+    right: 35px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+body.dark-mode .task-page-number {
+    color: #cbd5e1;
+}
+
 .section-title {
     font-family: var(--font-heading);
     font-size: 2.5rem;
