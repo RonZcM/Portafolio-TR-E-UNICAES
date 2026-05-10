@@ -43,11 +43,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const expandedImg = document.getElementById("expanded-image");
     const expandableImages = document.querySelectorAll(".expandable-image");
     const closeModal = document.querySelector(".close-modal");
+    const zoomInBtn = document.getElementById("zoom-in");
+    const zoomOutBtn = document.getElementById("zoom-out");
+    const zoomResetBtn = document.getElementById("zoom-reset");
+    const zoomLevelDisplay = document.getElementById("zoom-level");
+
+    let currentZoom = 1;
+    let isDragging = false;
+    let startX, startY, translateX = 0, translateY = 0;
+    const zoomStep = 0.2;
+    const maxZoom = 4;
+    const minZoom = 0.4;
+
+    const updateZoom = () => {
+        expandedImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom})`;
+        if(zoomLevelDisplay) {
+            zoomLevelDisplay.textContent = `${Math.round(currentZoom * 100)}%`;
+        }
+    };
+
+    zoomInBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentZoom < maxZoom) {
+            currentZoom = Math.round((currentZoom + zoomStep) * 10) / 10;
+            updateZoom();
+        }
+    });
+
+    zoomOutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentZoom > minZoom) {
+            currentZoom = Math.round((currentZoom - zoomStep) * 10) / 10;
+            updateZoom();
+        }
+    });
+
+    zoomResetBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentZoom = 1;
+        translateX = 0;
+        translateY = 0;
+        updateZoom();
+    });
+
+    // Panning logic
+    expandedImg.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        expandedImg.style.cursor = 'grabbing';
+        expandedImg.style.transition = 'none'; // Fix Chrome stuttering
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        updateZoom();
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            expandedImg.style.cursor = 'grab';
+            expandedImg.style.transition = 'transform 0.3s ease';
+        }
+    });
 
     expandableImages.forEach(img => {
         img.addEventListener('click', function() {
             modal.style.display = "block";
             expandedImg.src = this.src;
+            currentZoom = 1;
+            translateX = 0;
+            translateY = 0;
+            expandedImg.style.cursor = 'grab';
+            updateZoom();
             document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
         });
     });
@@ -58,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('click', (e) => {
-        if (e.target === modal) {
+        if (e.target === modal || e.target.classList.contains('modal-image-container')) {
             modal.style.display = "none";
             document.body.style.overflow = "auto";
         }
