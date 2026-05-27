@@ -337,6 +337,8 @@ body.dark-mode .task-page-number {
 .download-container {
     display: flex;
     justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
     margin-top: 1rem;
 }
 
