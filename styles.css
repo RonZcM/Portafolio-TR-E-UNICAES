@@ -6,8 +6,8 @@
     --accent-2: #750f0f;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Times New Roman', Times, serif;
+    --font-body: 'Times New Roman', Times, serif;
 }
 
 * {
@@ -115,7 +115,7 @@ header {
 .university-name {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--accent-2);
+    color: #000000;
     margin-bottom: 0.2rem;
 }
 
@@ -132,7 +132,7 @@ header {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #1e293b 0%, var(--accent-2) 100%);
+    background: #000000;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
@@ -148,7 +148,7 @@ header {
     transform: translateX(-50%);
     width: 100px;
     height: 2px;
-    background: linear-gradient(135deg, #1e293b 0%, var(--accent-2) 100%);
+    background: #000000;
 }
 
 .info-grid {
@@ -165,7 +165,7 @@ header {
 
 .info-item strong {
     display: block;
-    color: var(--accent-2);
+    color: #000000;
     font-size: 0.9rem;
     letter-spacing: 1px;
 }
@@ -530,6 +530,8 @@ body.dark-mode .info-item span,
 body.dark-mode .formal-students-list li,
 body.dark-mode .date-footer,
 body.dark-mode .faculty-name,
+body.dark-mode .university-name,
+body.dark-mode .info-item strong,
 body.dark-mode .text-content {
     color: #cbd5e1;
 }
